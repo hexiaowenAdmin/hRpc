@@ -1,5 +1,6 @@
 package com.rpc.nio;
 
+import com.rpc.centre.impl.ServiceCenter;
 import com.rpc.util.SerializingUtils;
 import com.rpc.util.ServiceReqUtil;
 import com.rpc.util.ZookeeperUtil;
@@ -43,7 +44,7 @@ public class NIOHandler {
                     //将数据添加到key中
                     key.attach(baos);
                     //将注册写操作添加到队列中
-                    NIOServerSocket.addWriteQueue(key);
+                    ServiceCenter.addWriteQueue(key);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -78,6 +79,7 @@ public class NIOHandler {
                     buffer.flip();
                     writeChannel.write(buffer);
                     writeChannel.close();
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

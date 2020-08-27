@@ -27,7 +27,7 @@ public class ZookeeperUtil implements Watcher{
 	public ZookeeperUtil() {
 		if(zk == null){
 			try {
-				zk = new ZooKeeper("127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183", 5000,new Watcher() {
+				zk = new ZooKeeper("127.0.0.1:2181", 5000,new Watcher() {
 				       // 监控所有被触发的事件
 				         public void process(WatchedEvent event) {
 				        	new ZookeeperUtil();
@@ -165,7 +165,7 @@ public class ZookeeperUtil implements Watcher{
 							listIp.add(ip);
 						}
 					}else{
-						zk.delete(groupName + className, -1);//如果类下面没有对应ip删除这个类的节点
+						zk.delete(groupName+"/" + className, -1);//如果类下面没有对应ip删除这个类的节点
 					}
 				}
 			} catch (Exception e) {

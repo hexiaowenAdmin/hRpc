@@ -5,12 +5,7 @@ import com.rpc.nio.NIOHandler;
 import com.rpc.util.ZookeeperUtil;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.lang.reflect.Method;
 import java.net.InetSocketAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
@@ -20,13 +15,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+@SuppressWarnings("all")
 public class ServiceCenter implements Server {
 
 
     //存储SelectionKey的队列
     private static List<SelectionKey> writeQueue = new ArrayList<>();
     private static Selector selector = null;
-    private static int port;
+    private int port;
 
     //添加SelectionKey到队列
     public static void addWriteQueue(SelectionKey key){
@@ -45,6 +41,7 @@ public class ServiceCenter implements Server {
     
 
     //启动服务
+    @Override
     public void start() throws IOException {
         // 1.创建ServerSocketChannel
         ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
@@ -101,7 +98,7 @@ public class ServiceCenter implements Server {
                         NIOHandler.write(key);
                     }
                 }
-            }else{
+            } else {
                 synchronized (writeQueue) {
                     while(writeQueue.size() > 0){
                         SelectionKey key = writeQueue.remove(0);
@@ -117,6 +114,7 @@ public class ServiceCenter implements Server {
     /**
      * 注册配置中心
      */
+    @Override
     public void register(Class serviceInterface, Class impl) {
         new ZookeeperUtil().createNode(serviceInterface.getName(),impl,port);
     }

@@ -14,7 +14,8 @@ import java.io.IOException;
 public class RPCServer {
 	public static void main(String[] args) {
 		 new Thread(new Runnable() {
-	            public void run() {
+	            @Override
+				public void run() {
 	                try {
 	                    Server serviceServer = new ServiceCenter(8080);
 	                    serviceServer.register(HelloService.class, HelloServiceImpl.class);

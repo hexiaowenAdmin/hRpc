@@ -14,7 +14,7 @@ import java.util.Set;
 public class NIOServerSocket {
 
     //存储SelectionKey的队列
-    private static List<SelectionKey> writeQueue = new ArrayList<SelectionKey>();
+    private static List<SelectionKey> writeQueue = new ArrayList<>();
     private static Selector selector = null;
 
     //添加SelectionKey到队列

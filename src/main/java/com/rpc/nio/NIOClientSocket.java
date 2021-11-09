@@ -24,6 +24,7 @@ public class NIOClientSocket {
         //使用线程模拟用户 并发访问
         for (int i = 0; i < 1; i++) {
             new Thread(){
+                @Override
                 public void run() {
                     try {
                         //1.创建SocketChannel
